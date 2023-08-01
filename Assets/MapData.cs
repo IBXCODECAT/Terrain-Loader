@@ -3,6 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+[Serializable]
+public struct Tree
+{
+    public int tintR;
+    public int tintG;
+    public int tintB;
+
+    public float scaleXZ;
+    public float scaleY;
+
+    public int lightmapR;
+    public int lightmapG;
+    public int lightmapB;
+    public int lightmapA;
+
+    public float posX;
+    public float posY;
+    public float posZ;
+
+    public int prototypeIndex;
+
+    public float rotationXZ;
+
+
+}
+
 [Serializable]
 public class MapData
 {
@@ -20,5 +47,5 @@ public class MapData
     public float mapSizeY;
     public float mapSizeZ;
 
-    //public TreeInstance[] trees;
+    public Tree[] trees;
 }

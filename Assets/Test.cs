@@ -22,10 +22,6 @@ public class Test : MonoBehaviour
 
     private void TestSave()
     {
-        Debug.Log(tdata.heightmapResolution);
-
-        float y = tdata.alphamapHeight;
-
         int alphaResolution = tdata.alphamapResolution;
 
         MapData mdata = new MapData
@@ -44,11 +40,8 @@ public class Test : MonoBehaviour
             mapSizeY = tdata.size.y,
             mapSizeZ = tdata.size.z,
 
-            //trees = tdata.treeInstances
+            trees = TreeUtility.ConvertToTrees(tdata.treeInstances),
         };
-
-        Debug.Log(tdata.size.x);
-        Debug.Log(tdata.size.y);
 
         MapManager.SaveMap(mdata);
     }
@@ -59,5 +52,6 @@ public class Test : MonoBehaviour
 
         tdata.SetHeights(0, 0, mdata.heightmapDATA);
         tdata.size = new Vector3(mdata.mapSizeX, mdata.mapSizeY, mdata.mapSizeZ);
+        tdata.treeInstances = TreeUtility.ConvertToTreeInstances(mdata.trees);
     }
 }
