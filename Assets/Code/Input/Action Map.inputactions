@@ -1,0 +1,98 @@
+{
+    "name": "Action Map",
+    "maps": [
+        {
+            "name": "BuildMode",
+            "id": "161fdda1-58bc-4eea-96a3-fb9bba333c52",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "69e6ed64-08cc-42d3-b345-2753bc32aa4d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookVerticalOffset",
+                    "type": "Value",
+                    "id": "d12441b7-2645-4074-8ea1-5c9c6ecb1e86",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a08e7fb2-1f78-4b13-94fe-cd55548d1dc4",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c32f68b4-f4ce-4340-b108-a4ca8b969671",
+                    "path": "<Joystick>/{Hatswitch}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Middle Mouse Look",
+                    "id": "94f63b67-12d8-4396-9903-917473192825",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "ScaleVector2(y=4)",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "7a06b270-f309-4df5-9b35-c3ebedfd2538",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "cf843fd5-7391-42d6-a021-eac3ca8de821",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "6514fd04-5058-4861-bbd0-a302ceb2b5e7",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "NormalizeVector2,InvertVector2(invertX=false),ScaleVector2(y=300)",
+                    "groups": "",
+                    "action": "LookVerticalOffset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

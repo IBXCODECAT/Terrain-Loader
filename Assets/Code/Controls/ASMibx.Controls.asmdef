@@ -1,8 +1,10 @@
 {
-    "name": "ASMibx.Simulation",
-    "rootNamespace": "Simulation",
+    "name": "ASMibx.Controls",
+    "rootNamespace": "Controls",
     "references": [
-        "GUID:457756d89b35d2941b3e7b37b4ece6f1"
+        "GUID:4bcda47d2ab2a8a49a5ab15f5188fd50",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
