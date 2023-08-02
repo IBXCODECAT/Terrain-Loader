@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -14,13 +15,28 @@ public static class MapManagerIO
     {
         MapData mdata = null;
 
-        using (FileStream stream = new FileStream(savepath, FileMode.Open))
+        try
         {
-            mdata = (MapData)formatter.Deserialize(stream);
+            using (FileStream dataStream = new FileStream(savepath, FileMode.Open))
+            {
+                using (GZipStream decompressedDataStream = new GZipStream(dataStream, CompressionMode.Decompress))
+                {
+                    mdata = (MapData)formatter.Deserialize(decompressedDataStream);
 
-            Debug.Log("Deserialized Map Data");
+                    decompressedDataStream.Close();
+                    dataStream.Close();
+                }
+
+                Debug.Log("Deserialized Map Data");
+            }
         }
-
+        catch(IOException ex)
+        {
+            Debug.LogException(ex);
+            mdata = null;
+            return;
+        }
+        
         //Set terrain sizes and resolutions
         tdata.alphamapResolution = mdata.alphamapResolution;
         tdata.heightmapResolution = mdata.heightmapResolution;
@@ -73,11 +89,26 @@ public static class MapManagerIO
             serializedTrees = TreeUtility.ConvertToSerializedTrees(tdata.treeInstances),
         };
 
-        using(FileStream stream = new FileStream(savepath, FileMode.Create))
+        try
         {
-            formatter.Serialize(stream, data);
+            using (FileStream dataStream = new FileStream(savepath, FileMode.Create))
+            {
+                using (GZipStream compressedDataStream = new GZipStream(dataStream, CompressionMode.Compress))
+                {
+                    formatter.Serialize(compressedDataStream, data);
 
-            Debug.Log("Serialized Map Data");
+                    compressedDataStream.Close();
+                    dataStream.Close();
+                }
+
+                Debug.Log("Serialized Map Data");
+            }
         }
+        catch (IOException ex) 
+        {
+            Debug.LogException(ex);
+            return;
+        }
+        
     }
 }
