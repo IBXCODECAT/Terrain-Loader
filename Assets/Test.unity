@@ -294,7 +294,6 @@ Terrain:
   m_AllowAutoConnect: 1
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
-  m_TreeMotionVectorModeOverride: 3
 --- !u!4 &1359932740
 Transform:
   m_ObjectHideFlags: 0
@@ -415,3 +414,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &871326559372333857
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8711421
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -19.555992
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 80.81694
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849409617932842406, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125925711752444472, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
+      propertyPath: m_Name
+      value: Cube
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ebf7539f7014c9b47b3de08d6a02f3b6, type: 3}
