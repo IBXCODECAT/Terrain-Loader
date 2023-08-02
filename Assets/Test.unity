@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1133.0817, g: 1035.1945, b: 923.86145, a: 1}
+  m_IndirectSpecularColor: {r: 1133.4366, g: 1035.5123, b: 924.046, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -350,6 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 378316669}
   - component: {fileID: 378316668}
+  - component: {fileID: 378316670}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -376,12 +377,12 @@ MonoBehaviour:
   cpuFullResolution: 0
   cpuEvaluateRipples: 0
   timeMultiplier: 1
-  repetitionSize: 500
+  repetitionSize: 250
   largeWindSpeed: 30
   largeWindOrientationValue: 0
-  largeCurrentSpeedValue: 0
-  largeCurrentOrientationValue: 0
-  largeChaos: 0.85
+  largeCurrentSpeedValue: 20
+  largeCurrentOrientationValue: 5
+  largeChaos: 0.8
   largeBand0Multiplier: 1
   largeBand0FadeToggle: 1
   largeBand0FadeStart: 1500
@@ -498,6 +499,88 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &378316670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378316667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cc75d4783497148bc781f4d7fe8107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simulate: 1
+  simulationSpeed: 1
+  simulationDelayMin: 10
+  simulationDelayMax: 40
+  windInfo: {fileID: 957930787}
+  wdata: {fileID: 0}
+--- !u!1 &957930786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 957930788}
+  - component: {fileID: 957930787}
+  - component: {fileID: 957930789}
+  m_Layer: 0
+  m_Name: WindZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!182 &957930787
+WindZone:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957930786}
+  m_Enabled: 1
+  m_Mode: 0
+  m_Radius: 20
+  m_WindMain: 1
+  m_WindTurbulence: 1
+  m_WindPulseMagnitude: 0.5
+  m_WindPulseFrequency: 0.01
+--- !u!4 &957930788
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957930786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &957930789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957930786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1de9f2d0c5cc748a2883c6d0780123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simulate: 1
+  simulationSpeed: 1
+  simulationDelayMin: 1
+  simulationDelayMax: 5
+  windInfo: {fileID: 957930787}
 --- !u!1 &1090700918
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,7 +641,6 @@ GameObject:
   - component: {fileID: 1359932740}
   - component: {fileID: 1359932739}
   - component: {fileID: 1359932738}
-  - component: {fileID: 1359932741}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -640,19 +722,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1359932741
+--- !u!1 &1508590503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1508590505}
+  - component: {fileID: 1508590504}
+  m_Layer: 0
+  m_Name: Runtime Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1508590504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359932737}
+  m_GameObject: {fileID: 1508590503}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fe080154b894e34581641979f1c6ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tdata: {fileID: 15600000, guid: 4d06c14f9aa6cde46b09293c073ff809, type: 2}
+  wdata: {fileID: 378316668}
+--- !u!4 &1508590505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508590503}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1570890838
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,6 +800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tdata: {fileID: 15600000, guid: a259478726591a64096f1418d260452c, type: 2}
+  wdata: {fileID: 0}
 --- !u!154 &1570890840
 TerrainCollider:
   m_ObjectHideFlags: 0

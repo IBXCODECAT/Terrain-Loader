@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 namespace MapManagement
 {
@@ -16,7 +17,7 @@ namespace MapManagement
         /// Load terrain data saved to this device
         /// </summary>
         /// <param name="tdata">The terrain data asset to apply the saved data to</param>
-        internal static void LoadTerrainData(TerrainData tdata)
+        internal static void LoadTerrainData(TerrainData tdata, WaterSurface wdata)
         {
             MapData mdata = null;
 
@@ -42,11 +43,14 @@ namespace MapManagement
                 return;
             }
 
+            //Set the sea level for our water
+            wdata.transform.position = new Vector3(0f, mdata.seaLevel, 0f);
+
             //Set terrain size so we start with the correct dimensions
             tdata.size = new Vector3(mdata.sizeX, mdata.sizeY, mdata.sizeZ);
 
             //Set data map resolutions so the maps we have saved will match this terrain
-            tdata.alphamapResolution = mdata.alphamapResolution;
+            tdata.alphamapResolution = mdata.alphamapsResolution;
             tdata.heightmapResolution = mdata.heightmapResolution;
 
             //Set the data stored in our data maps
@@ -54,16 +58,16 @@ namespace MapManagement
             tdata.SetHeights(0, 0, mdata.heightmapDATA);
 
             //For each detail layer in our saved data, map the layer to the terrain
-            for (int i = 0; i < mdata.detailLayersDATA.Length; i++)
+            for (int i = 0; i < mdata.detailmapsDATA.Length; i++)
             {
-                tdata.SetDetailLayer(0, 0, i, mdata.detailLayersDATA[i]);
+                tdata.SetDetailLayer(0, 0, i, mdata.detailmapsDATA[i]);
             }
 
             //Set terrain tree instances
             tdata.treeInstances = TreeUtility.ConvertFromSerializedTrees(mdata.serializedTrees);
         }
 
-        internal static void SaveTerrainData(TerrainData tdata)
+        internal static void SaveTerrainData(TerrainData tdata, WaterSurface wdata)
         {
             int alphaResolution = tdata.alphamapResolution;
             int detailmapResolution = tdata.detailResolution;
@@ -77,17 +81,19 @@ namespace MapManagement
 
             MapData data = new MapData
             {
-                alphamapResolution = alphaResolution,
+                alphamapsResolution = alphaResolution,
 
                 alphamapLayers = tdata.alphamapLayers,
 
-                detailResolution = tdata.detailResolution,
+                detailmapsResolution = tdata.detailResolution,
 
                 alphamapDATA = tdata.GetAlphamaps(0, 0, alphaResolution, alphaResolution),
-                detailLayersDATA = detailLayers.ToArray(),
+                detailmapsDATA = detailLayers.ToArray(),
                 heightmapDATA = tdata.GetHeights(0, 0, tdata.heightmapResolution, tdata.heightmapResolution),
 
                 heightmapResolution = tdata.heightmapResolution,
+
+                seaLevel = wdata.transform.position.y,
 
                 sizeX = tdata.size.x,
                 sizeY = tdata.size.y,

@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.HighDefinition;
 
 namespace MapManagement
 {
     public class RuntimeMapManager : MonoBehaviour
     {
         [SerializeField] TerrainData tdata;
+        [SerializeField] WaterSurface wdata;
 
         private void Update()
         {
@@ -24,12 +26,12 @@ namespace MapManagement
 
         private void TestSave()
         {
-            MapManagerIO.SaveTerrainData(tdata);
+            MapManagerIO.SaveTerrainData(tdata, wdata);
         }
 
         private void TestLoad()
         {
-            MapManagerIO.LoadTerrainData(tdata);
+            MapManagerIO.LoadTerrainData(tdata, wdata);
         }
     }
 }

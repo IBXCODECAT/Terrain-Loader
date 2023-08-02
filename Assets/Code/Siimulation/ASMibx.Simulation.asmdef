@@ -1,6 +1,6 @@
 {
-    "name": "ASMibx.MapManagement",
-    "rootNamespace": "MapManagement",
+    "name": "ASMibx.Simulation",
+    "rootNamespace": "Simulation",
     "references": [
         "GUID:457756d89b35d2941b3e7b37b4ece6f1"
     ],

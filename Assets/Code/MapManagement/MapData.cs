@@ -29,16 +29,18 @@ namespace MapManagement
     [Serializable]
     public class MapData
     {
+        public float seaLevel;
+
         public int alphamapHeight;
         public int alphamapLayers;
 
-        public int alphamapResolution;
-        public int detailResolution;
+        public int alphamapsResolution;
+        public int detailmapsResolution;
         public int heightmapResolution;
 
         public float[,,] alphamapDATA;
+        public int[][,] detailmapsDATA;
         public float[,] heightmapDATA;
-        public int[][,] detailLayersDATA;
 
         public float sizeX;
         public float sizeY;
