@@ -11,21 +11,27 @@ namespace Controls
     public class CameraController : MonoBehaviour
     {
         [Header("Camera Information")]
-        [SerializeField] private Camera camera;
+        [SerializeField] private new Camera camera;
         [SerializeField] private CinemachineVirtualCamera virtualCamera;
         [SerializeField] private Transform FOLLOW_TARGET;
         [SerializeField] private Transform LOOK_TARGET;
         [SerializeField] private Transform DOLLY_SYSTEM;
 
-        [SerializeField] private float minYOffset = 7;
-        [SerializeField] private float maxYOffset = 75;
-
-        [SerializeField] private float dollySpeedMultiplier = 5;
+        [Header("Control Information")]
+        [SerializeField] private LayerMask cameraOffsetFromLayers;
+        [Range(2f, 15f)]
+        [SerializeField] private float minTerrainYOffset;
+        [Range(75f, 275f)]
+        [SerializeField] private float maxTerrainYOffset;
+        [Range(1, 200)]
+        [SerializeField] private int dollySpeedMultiplier;
 
 
         private ActionMap.BuildModeActions inputActions;
 
-        private float offsetY = 0f;
+        private float terrainOffsetY = 0f;
+
+        private RaycastHit vcamRayHit;
 
         private void Awake()
         {
@@ -36,6 +42,8 @@ namespace Controls
 
         private void Update()
         {
+            Physics.Raycast(virtualCamera.transform.position, -Vector3.up, out vcamRayHit, Mathf.Infinity, cameraOffsetFromLayers.value);
+
             UpdateCameraDollyMove();
             UpdateCameraZoom();
         }
@@ -52,9 +60,9 @@ namespace Controls
             //Moves the entire dolly system "forward" relative to the current y-axis rotation
             DOLLY_SYSTEM.Translate(dollyMovement);
 
-            //Once the dolly system has moved, move the Cinemachine targets along the X and Z axis.
+            //Once the dolly system has moved, move the Cinemachine targets along the X and Z axis & snap to Y raycast.
             //NOTE: The actual camera movement is handled by Cinemachine every frame in the Cinemachine code assembly
-            LOOK_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, LOOK_TARGET.position.y, DOLLY_SYSTEM.position.z);
+            LOOK_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, vcamRayHit.point.y, DOLLY_SYSTEM.position.z);
             FOLLOW_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, FOLLOW_TARGET.position.y, DOLLY_SYSTEM.position.z);
         }
 
@@ -65,8 +73,10 @@ namespace Controls
 
             scrollInput *= Time.deltaTime;
 
-            offsetY = Mathf.Clamp(FOLLOW_TARGET.position.y + scrollInput, minYOffset, maxYOffset);
-            FOLLOW_TARGET.position = new Vector3(FOLLOW_TARGET.position.x, offsetY, FOLLOW_TARGET.position.z);
+            float calculatedMinOffsetY = vcamRayHit.point.y + minTerrainYOffset;
+
+            terrainOffsetY = Mathf.Clamp(FOLLOW_TARGET.position.y + scrollInput, calculatedMinOffsetY, maxTerrainYOffset);
+            FOLLOW_TARGET.position = new Vector3(FOLLOW_TARGET.position.x, terrainOffsetY, FOLLOW_TARGET.position.z);
         }
     }
 }
