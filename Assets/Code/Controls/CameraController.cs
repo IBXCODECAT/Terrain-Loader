@@ -56,11 +56,6 @@ namespace Controls
             Debug.DrawLine(transform.position, FOLLOW_TARGET.position, Color.blue);
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(virtualCamera.transform.position, virtualCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>().m_FollowOffset.z);
-        }
-
         private void UpdateCameraDollyMove()
         {
             //Rotate dolly system to match the roation of the main camera w/o lineier interpolation of VCAM

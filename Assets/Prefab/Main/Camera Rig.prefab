@@ -406,7 +406,7 @@ MonoBehaviour:
     m_Bits: 24
   minTerrainYOffset: 3
   maxTerrainYOffset: 275
-  lookTargetTerrainClearance: 1.25
+  lookTargetTerrainClearance: 2.5
   dollySpeedMultiplier: 20
 --- !u!1 &3703695988208090386
 GameObject:
