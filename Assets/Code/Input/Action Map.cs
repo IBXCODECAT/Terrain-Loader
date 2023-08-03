@@ -46,6 +46,15 @@ namespace PlayerInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraDollyMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""7906153c-5051-4494-a950-3f48d79963e2"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -114,6 +123,61 @@ namespace PlayerInput
                     ""action"": ""LookVerticalOffset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""ba63e0b0-7eff-44ab-a066-896da6231a92"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": ""NormalizeVector2"",
+                    ""groups"": """",
+                    ""action"": ""CameraDollyMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ef583eac-b2f9-4bf8-9a32-7b444e2edf09"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraDollyMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b3092c56-7a2d-4b04-94a0-a4dfd961d126"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraDollyMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ff3945a5-be18-4e22-a49d-7162df1eca2d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraDollyMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""cc72b4dc-aa7d-4e8d-abb8-1b09b42549a4"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraDollyMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -124,6 +188,7 @@ namespace PlayerInput
             m_BuildMode = asset.FindActionMap("BuildMode", throwIfNotFound: true);
             m_BuildMode_Look = m_BuildMode.FindAction("Look", throwIfNotFound: true);
             m_BuildMode_LookVerticalOffset = m_BuildMode.FindAction("LookVerticalOffset", throwIfNotFound: true);
+            m_BuildMode_CameraDollyMovement = m_BuildMode.FindAction("CameraDollyMovement", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -187,12 +252,14 @@ namespace PlayerInput
         private List<IBuildModeActions> m_BuildModeActionsCallbackInterfaces = new List<IBuildModeActions>();
         private readonly InputAction m_BuildMode_Look;
         private readonly InputAction m_BuildMode_LookVerticalOffset;
+        private readonly InputAction m_BuildMode_CameraDollyMovement;
         public struct BuildModeActions
         {
             private @ActionMap m_Wrapper;
             public BuildModeActions(@ActionMap wrapper) { m_Wrapper = wrapper; }
             public InputAction @Look => m_Wrapper.m_BuildMode_Look;
             public InputAction @LookVerticalOffset => m_Wrapper.m_BuildMode_LookVerticalOffset;
+            public InputAction @CameraDollyMovement => m_Wrapper.m_BuildMode_CameraDollyMovement;
             public InputActionMap Get() { return m_Wrapper.m_BuildMode; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -208,6 +275,9 @@ namespace PlayerInput
                 @LookVerticalOffset.started += instance.OnLookVerticalOffset;
                 @LookVerticalOffset.performed += instance.OnLookVerticalOffset;
                 @LookVerticalOffset.canceled += instance.OnLookVerticalOffset;
+                @CameraDollyMovement.started += instance.OnCameraDollyMovement;
+                @CameraDollyMovement.performed += instance.OnCameraDollyMovement;
+                @CameraDollyMovement.canceled += instance.OnCameraDollyMovement;
             }
 
             private void UnregisterCallbacks(IBuildModeActions instance)
@@ -218,6 +288,9 @@ namespace PlayerInput
                 @LookVerticalOffset.started -= instance.OnLookVerticalOffset;
                 @LookVerticalOffset.performed -= instance.OnLookVerticalOffset;
                 @LookVerticalOffset.canceled -= instance.OnLookVerticalOffset;
+                @CameraDollyMovement.started -= instance.OnCameraDollyMovement;
+                @CameraDollyMovement.performed -= instance.OnCameraDollyMovement;
+                @CameraDollyMovement.canceled -= instance.OnCameraDollyMovement;
             }
 
             public void RemoveCallbacks(IBuildModeActions instance)
@@ -239,6 +312,7 @@ namespace PlayerInput
         {
             void OnLook(InputAction.CallbackContext context);
             void OnLookVerticalOffset(InputAction.CallbackContext context);
+            void OnCameraDollyMovement(InputAction.CallbackContext context);
         }
     }
 }
