@@ -19,10 +19,12 @@ namespace Controls
 
         [Header("Control Information")]
         [SerializeField] private LayerMask cameraOffsetFromLayers;
-        [Range(2f, 15f)]
+        [Range(3f, 15f)]
         [SerializeField] private float minTerrainYOffset;
         [Range(75f, 275f)]
         [SerializeField] private float maxTerrainYOffset;
+        [Range(0f, 3f)]
+        [SerializeField] private float lookTargetTerrainClearance;
         [Range(1, 200)]
         [SerializeField] private int dollySpeedMultiplier;
 
@@ -42,10 +44,21 @@ namespace Controls
 
         private void Update()
         {
-            Physics.Raycast(virtualCamera.transform.position, -Vector3.up, out vcamRayHit, Mathf.Infinity, cameraOffsetFromLayers.value);
+            Physics.Raycast(virtualCamera.transform.position + (transform.up * 200), -Vector3.up, out vcamRayHit, Mathf.Infinity, cameraOffsetFromLayers.value);
 
             UpdateCameraDollyMove();
             UpdateCameraZoom();
+
+            Debug.DrawLine(virtualCamera.transform.position, LOOK_TARGET.position, Color.cyan);
+            Debug.DrawLine(virtualCamera.transform.position, FOLLOW_TARGET.position, Color.blue);
+
+            Debug.DrawLine(transform.position, LOOK_TARGET.position, Color.cyan);
+            Debug.DrawLine(transform.position, FOLLOW_TARGET.position, Color.blue);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(virtualCamera.transform.position, virtualCamera.GetCinemachineComponent<CinemachineOrbitalTransposer>().m_FollowOffset.z);
         }
 
         private void UpdateCameraDollyMove()
@@ -62,8 +75,9 @@ namespace Controls
 
             //Once the dolly system has moved, move the Cinemachine targets along the X and Z axis & snap to Y raycast.
             //NOTE: The actual camera movement is handled by Cinemachine every frame in the Cinemachine code assembly
-            LOOK_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, vcamRayHit.point.y, DOLLY_SYSTEM.position.z);
             FOLLOW_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, FOLLOW_TARGET.position.y, DOLLY_SYSTEM.position.z);
+            LOOK_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, vcamRayHit.point.y + lookTargetTerrainClearance, DOLLY_SYSTEM.position.z);
+
         }
 
         private void UpdateCameraZoom()
