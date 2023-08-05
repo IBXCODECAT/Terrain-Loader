@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.SceneManagement;
 
 namespace MapManagement
 {
@@ -13,12 +14,20 @@ namespace MapManagement
 
         private static BinaryFormatter formatter = new BinaryFormatter();
 
+        private static void SetPath()
+        {
+            string pathExt = $"/ibxm/{SceneManager.GetActiveScene().name}.ibxm";
+            savepath = Application.streamingAssetsPath + pathExt;
+        }
+
         /// <summary>
         /// Load terrain data saved to this device
         /// </summary>
         /// <param name="tdata">The terrain data asset to apply the saved data to</param>
         internal static void LoadTerrainData(TerrainData tdata, WaterSurface wdata)
         {
+            SetPath();
+
             MapData mdata = null;
 
             try
@@ -69,6 +78,7 @@ namespace MapManagement
 
         internal static void SaveTerrainData(TerrainData tdata, WaterSurface wdata)
         {
+
             int alphaResolution = tdata.alphamapResolution;
             int detailmapResolution = tdata.detailResolution;
 
@@ -104,6 +114,12 @@ namespace MapManagement
 
             try
             {
+                SetPath();
+
+                //Create the file and directory for the save file
+                Directory.CreateDirectory(Path.GetDirectoryName(savepath));
+                File.Create(savepath).Close();
+
                 using (FileStream dataStream = new FileStream(savepath, FileMode.Create))
                 {
                     using (GZipStream compressedDataStream = new GZipStream(dataStream, CompressionMode.Compress))
