@@ -35,6 +35,14 @@ namespace Controls
 
         private RaycastHit vcamRayHit;
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(LOOK_TARGET.position, lookTargetTerrainClearance / 2);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(FOLLOW_TARGET.position, 10f);
+        }
+
         private void Awake()
         {
             inputActions = InputMapManager.GetBuildModeActions();
@@ -56,6 +64,8 @@ namespace Controls
 
                 Debug.DrawLine(transform.position, LOOK_TARGET.position, Color.cyan);
                 Debug.DrawLine(transform.position, FOLLOW_TARGET.position, Color.blue);
+
+                Debug.DrawLine(LOOK_TARGET.position, FOLLOW_TARGET.position, Color.magenta);
             }
         }
 
