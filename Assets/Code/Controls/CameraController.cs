@@ -1,10 +1,7 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using PlayerInput;
-using UnityEditor;
 
 namespace Controls
 {
@@ -28,6 +25,9 @@ namespace Controls
         [Range(1, 200)]
         [SerializeField] private int dollySpeedMultiplier;
 
+        [Header("Debug Settings")]
+        [SerializeField] private bool debugMode;
+
 
         private ActionMap.BuildModeActions inputActions;
 
@@ -49,13 +49,21 @@ namespace Controls
             UpdateCameraDollyMove();
             UpdateCameraZoom();
 
-            Debug.DrawLine(virtualCamera.transform.position, LOOK_TARGET.position, Color.cyan);
-            Debug.DrawLine(virtualCamera.transform.position, FOLLOW_TARGET.position, Color.blue);
+            if(debugMode)
+            {
+                Debug.DrawLine(virtualCamera.transform.position, LOOK_TARGET.position, Color.cyan);
+                Debug.DrawLine(virtualCamera.transform.position, FOLLOW_TARGET.position, Color.blue);
 
-            Debug.DrawLine(transform.position, LOOK_TARGET.position, Color.cyan);
-            Debug.DrawLine(transform.position, FOLLOW_TARGET.position, Color.blue);
+                Debug.DrawLine(transform.position, LOOK_TARGET.position, Color.cyan);
+                Debug.DrawLine(transform.position, FOLLOW_TARGET.position, Color.blue);
+            }
         }
 
+        /// <summary>
+        /// Updates the camera dolly for this frame.
+        /// This works by moving the Cinemachine targets according to the
+        /// dolly object's transform component
+        /// </summary>
         private void UpdateCameraDollyMove()
         {
             //Rotate dolly system to match the roation of the main camera w/o lineier interpolation of VCAM
@@ -72,12 +80,10 @@ namespace Controls
             //NOTE: The actual camera movement is handled by Cinemachine every frame in the Cinemachine code assembly
             FOLLOW_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, FOLLOW_TARGET.position.y, DOLLY_SYSTEM.position.z);
             LOOK_TARGET.position = new Vector3(DOLLY_SYSTEM.position.x, vcamRayHit.point.y + lookTargetTerrainClearance, DOLLY_SYSTEM.position.z);
-
         }
 
         private void UpdateCameraZoom()
         {
-
             float scrollInput = inputActions.LookVerticalOffset.ReadValue<Vector2>().y + inputActions.Look.ReadValue<Vector2>().y;
 
             scrollInput *= Time.deltaTime;
